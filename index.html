@@ -14,14 +14,17 @@
   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
   <script type="text/babel">
     const root = document.getElementById("root");
-    const Title = () => <h3 id="title">This is a title</h3>;
-    const Button = () => <button>Click me</button>;
-    const Container = () => (
-      <div>
-        <Title />
-        <Button />
-      </div>
-    );
+    const Container = () => {
+      const [count, setCount] = React.useState(0);
+      const addCount = () => setCount(current => current + 1)
+      
+      return (
+        <div>
+          <h3>Total clicks : {count}</h3>
+          <button onClick={addCount}>Click me</button>
+        </div>
+      )
+    };
     ReactDOM.render(<Container />, root);
   </script>
 </html>
