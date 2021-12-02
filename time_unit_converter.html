@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script
+    src="https://unpkg.com/react@17/umd/react.development.js"
+    crossorigin
+  ></script>
+  <script
+    src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    crossorigin
+  ></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script type="text/babel">
+    const MinutesToHours = () => {
+      const [amount, setAmount] = React.useState(0);
+      const changeUnits = (event) => setAmount(event.target.value);
+      const reset = () => setAmount(0);
+
+      const [isMinutesToHours, setIsMinutesToHours] = React.useState(true);
+      const invert = () => {
+        setIsMinutesToHours(!isMinutesToHours);
+        reset();
+      };
+
+      return (
+        <div>
+          <div>
+            <label htmlFor="minutes">Minutes</label>
+            <input
+              type="text"
+              id="minutes"
+              value={isMinutesToHours ? amount : amount * 60}
+              onChange={changeUnits}
+              placeholder="Minutes"
+              disabled={!isMinutesToHours}
+            />
+          </div>
+          <div>
+            <label htmlFor="hours">Hours</label>
+            <input
+              type="text"
+              id="hours"
+              value={isMinutesToHours ? Math.round(amount / 60) : amount}
+              onChange={changeUnits}
+              placeholder="Hours"
+              disabled={isMinutesToHours}
+            />
+          </div>
+          <button onClick={reset}>Reset</button>
+          <button onClick={invert}>Invert units</button>
+        </div>
+      );
+    };
+
+    const App = () => {
+      return (
+        <div>
+          <MinutesToHours />
+        </div>
+      );
+    };
+
+    ReactDOM.render(<App />, root);
+  </script>
+</html>
