@@ -1,28 +1,26 @@
 import { useState, useEffect } from "react";
 import Button from "./Button";
 
+function Hello() {
+  useEffect(() => {
+    console.log("created :)");
+    return () => console.log("destroyed :(");
+  }, []);
+
+  return <h1>Hello!</h1>;
+}
+
 function App() {
-  const [count, setCount] = useState(0);
-  const increaseCount = () => setCount((prev) => prev + 1);
-
-  const [keyword, setKeyword] = useState("");
-  const changeKeyword = (event) => setKeyword(event.target.value);
-
-  useEffect(() => console.log("I run only once"), []);
-  useEffect(() => console.log("I run only when 'keyword' changes"), [keyword]);
-  useEffect(() => console.log("I run only when 'count' changes"), [count]);
-  useEffect(() => console.log("I run only when 'count' or 'keyword' changes"), [count, keyword]);
+  const [isVisible, setVisible] = useState(true);
+  const changeVisibility = () => setVisible((prev) => !prev);
 
   return (
     <div>
-      <input
-        type="text"
-        value={keyword}
-        onChange={changeKeyword}
-        placeholder="Search here..."
+      {isVisible ? <Hello /> : null}
+      <Button
+        text={isVisible ? "Hide" : "Show"}
+        changeVisibility={changeVisibility}
       />
-      <h1>Total clicks = {count}</h1>
-      <Button text="Click me" increaseCount={increaseCount} />
     </div>
   );
 }
