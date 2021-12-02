@@ -1,11 +1,28 @@
+import { useState, useEffect } from "react";
 import Button from "./Button";
-import styles from "./App.module.css";
 
 function App() {
+  const [count, setCount] = useState(0);
+  const increaseCount = () => setCount((prev) => prev + 1);
+
+  const [keyword, setKeyword] = useState("");
+  const changeKeyword = (event) => setKeyword(event.target.value);
+
+  useEffect(() => console.log("I run only once"), []);
+  useEffect(() => console.log("I run only when 'keyword' changes"), [keyword]);
+  useEffect(() => console.log("I run only when 'count' changes"), [count]);
+  useEffect(() => console.log("I run only when 'count' or 'keyword' changes"), [count, keyword]);
+
   return (
     <div>
-      <h1 className={styles.title}>Welcome back!</h1>
-      <Button text="Continue" />
+      <input
+        type="text"
+        value={keyword}
+        onChange={changeKeyword}
+        placeholder="Search here..."
+      />
+      <h1>Total clicks = {count}</h1>
+      <Button text="Click me" increaseCount={increaseCount} />
     </div>
   );
 }

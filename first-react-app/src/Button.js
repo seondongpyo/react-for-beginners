@@ -1,8 +1,12 @@
 import PropTypes from "prop-types";
 import styles from "./Button.module.css";
 
-function Button({ text }) {
-  return <button className={styles.btn}>{text}</button>;
+function Button({ text, increaseCount }) {
+  return (
+    <button className={styles.btn} onClick={increaseCount}>
+      {text}
+    </button>
+  );
 }
 
 Button.propTypes = {
