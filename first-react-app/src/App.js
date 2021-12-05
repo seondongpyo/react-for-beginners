@@ -1,26 +1,38 @@
-import { useState, useEffect } from "react";
-import Button from "./Button";
-
-function Hello() {
-  useEffect(() => {
-    console.log("created :)");
-    return () => console.log("destroyed :(");
-  }, []);
-
-  return <h1>Hello!</h1>;
-}
+import { useState } from "react";
 
 function App() {
-  const [isVisible, setVisible] = useState(true);
-  const changeVisibility = () => setVisible((prev) => !prev);
+  const [todos, setTodos] = useState([]);
+  const [todo, setTodo] = useState("");
+  const inputTodo = (event) => setTodo(event.target.value);
+
+  const addTodo = (event) => {
+    event.preventDefault(); // block refresh
+    if (todo === "") {
+      return;
+    }
+    setTodo("");
+    setTodos((currentTodos) => [todo, ...currentTodos]);
+  };
 
   return (
     <div>
-      {isVisible ? <Hello /> : null}
-      <Button
-        text={isVisible ? "Hide" : "Show"}
-        changeVisibility={changeVisibility}
-      />
+      <h1>My Todos {todos.length === 0 ? null : `(${todos.length})`}</h1>
+      <form onSubmit={addTodo}>
+        <input
+          text="text"
+          value={todo}
+          onChange={inputTodo}
+          placeholder="Write your Todo..."
+        />
+        <button>Add Todo</button>
+      </form>
+      <div>
+        <ul>
+          {todos.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
