@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 function InputSample() {
   const [inputs, setInputs] = useState({
@@ -6,6 +6,7 @@ function InputSample() {
     nickname: "",
   });
 
+  const nameInput = useRef();
   const { name, nickname } = inputs; // 비구조화 할당을 통한 값 추출
 
   const onChange = (event) => {
@@ -21,6 +22,7 @@ function InputSample() {
       name: "",
       nickname: "",
     });
+    nameInput.current.focus();
   };
 
   return (
@@ -31,6 +33,7 @@ function InputSample() {
         placeholder="닉네임"
         onChange={onChange}
         value={nickname}
+        ref={nameInput}
       />
       <button onClick={onReset}>초기화</button>
       <div>
