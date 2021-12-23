@@ -14,16 +14,13 @@ function App() {
   });
 
   const { username, email } = inputs;
-  const onChange = useCallback(
-    (event) => {
-      const { name, value } = event.target;
-      setInputs({
-        ...inputs,
-        [name]: value,
-      });
-    },
-    [inputs]
-  );
+  const onChange = useCallback((event) => {
+    const { name, value } = event.target;
+    setInputs((inputs) => ({
+      ...inputs,
+      [name]: value,
+    }));
+  }, []);
 
   const [users, setUsers] = useState([
     {
@@ -54,32 +51,26 @@ function App() {
       email,
     };
 
-    setUsers([...users, user]);
+    setUsers((users) => users.concat(user));
 
     setInputs({
       username: "",
       email: "",
     });
     nextId.current += 1;
-  }, [users, username, email]);
+  }, [username, email]);
 
-  const onRemove = useCallback(
-    (id) => {
-      setUsers(users.filter((user) => user.id !== id));
-    },
-    [users]
-  );
+  const onRemove = useCallback((id) => {
+    setUsers((users) => users.filter((user) => user.id !== id));
+  }, []);
 
-  const onToggle = useCallback(
-    (id) => {
-      setUsers(
-        users.map((user) =>
-          user.id === id ? { ...user, active: !user.active } : user
-        )
-      );
-    },
-    [users]
-  );
+  const onToggle = useCallback((id) => {
+    setUsers((users) =>
+      users.map((user) =>
+        user.id === id ? { ...user, active: !user.active } : user
+      )
+    );
+  }, []);
 
   // useMemo 를 활용하지 않는 경우
   // const count = countActiveUsers(users); // input 값이 변할 때도 리렌더링 되기 때문에 불필요하게 함수가 호출된다.
